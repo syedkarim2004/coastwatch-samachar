@@ -8,11 +8,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Camera, AlertTriangle, Phone, User } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import Map from "./Map";
 
 const HazardReportForm = () => {
   const { toast } = useToast();
   const [location, setLocation] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number; address?: string } | null>(null);
 
   const hazardTypes = [
     { value: "tsunami", label: "Tsunami Warning", severity: "high" },
@@ -155,18 +157,47 @@ const HazardReportForm = () => {
                     Location Information
                   </h3>
                   
-                  <div>
-                    <Label htmlFor="location">GPS Coordinates</Label>
-                    <div className="flex gap-2">
-                      <Input 
-                        id="location" 
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        placeholder="Latitude, Longitude or click to get current location" 
-                      />
-                      <Button type="button" variant="outline" onClick={handleGetLocation}>
-                        <MapPin className="h-4 w-4" />
-                      </Button>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <Label htmlFor="latitude">Latitude</Label>
+                        <Input
+                          id="latitude"
+                          type="number"
+                          step="any"
+                          placeholder="e.g., 13.0827"
+                          className="mt-1"
+                          value={selectedLocation?.lat || ''}
+                          readOnly
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="longitude">Longitude</Label>
+                        <Input
+                          id="longitude"
+                          type="number"
+                          step="any"
+                          placeholder="e.g., 80.2707"
+                          className="mt-1"
+                          value={selectedLocation?.lng || ''}
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label>Select Location on Map</Label>
+                      <div className="mt-2">
+                        <Map 
+                          onLocationSelect={setSelectedLocation}
+                          height="300px"
+                        />
+                      </div>
+                      {selectedLocation && (
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Location selected: {selectedLocation.lat.toFixed(6)}, {selectedLocation.lng.toFixed(6)}
+                        </p>
+                      )}
                     </div>
                   </div>
 
