@@ -6,12 +6,7 @@ import { Menu, MapPin, AlertTriangle, Users, BarChart3 } from "lucide-react";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navigation = [
-    { name: "Dashboard", href: "#dashboard", icon: BarChart3 },
-    { name: "Report Hazard", href: "#report", icon: AlertTriangle },
-    { name: "Live Map", href: "#map", icon: MapPin },
-    { name: "Community", href: "#community", icon: Users },
-  ];
+  const navigation = [];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
