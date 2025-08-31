@@ -35,11 +35,11 @@ const Header = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              Login
+            <Button variant="outline" size="sm" onClick={() => window.location.href = '/live-map'}>
+              Live Map
             </Button>
-            <Button variant="government" size="sm">
-              Register
+            <Button variant="default" size="sm" onClick={() => window.location.href = '/report-hazard'}>
+              Report Hazard
             </Button>
           </div>
 

@@ -40,10 +40,27 @@ All colors MUST be HSL.
     --gradient-ocean: linear-gradient(135deg, hsl(210 90% 35%), hsl(195 85% 45%));
     --gradient-wave: linear-gradient(180deg, hsl(210 90% 35%), hsl(210 80% 45%));
     --gradient-alert: linear-gradient(135deg, hsl(0 85% 60%), hsl(15 90% 65%));
+    --gradient-emergency: linear-gradient(135deg, hsl(25 95% 55%), hsl(15 90% 65%));
+    
+    /* Glassmorphism effects */
+    --glass: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-backdrop: blur(10px);
+    
+    /* Emergency colors */
+    --emergency: 25 95% 55%;
+    --emergency-foreground: 0 0% 100%;
+    
+    /* Severity levels */
+    --severity-low: 120 60% 50%;
+    --severity-medium: 45 95% 55%;
+    --severity-high: 0 85% 60%;
+    --severity-critical: 310 85% 45%;
     
     /* Custom shadows */
     --shadow-ocean: 0 10px 30px -10px hsl(210 90% 35% / 0.3);
     --shadow-card: 0 4px 20px -4px hsl(210 50% 25% / 0.1);
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     
     /* Animation */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -122,5 +139,81 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .glass {
+    backdrop-filter: var(--glass-backdrop);
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+  }
+  
+  .glass-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-glass);
+  }
+  
+  .emergency-ticker {
+    background: var(--gradient-emergency);
+    color: hsl(var(--emergency-foreground));
+    animation: scroll-left 30s linear infinite;
+  }
+  
+  .emergency-ticker:hover {
+    animation-play-state: paused;
+  }
+  
+  .severity-low {
+    background: hsl(var(--severity-low));
+    color: white;
+  }
+  
+  .severity-medium {
+    background: hsl(var(--severity-medium));
+    color: white;
+  }
+  
+  .severity-high {
+    background: hsl(var(--severity-high));
+    color: white;
+  }
+  
+  .severity-critical {
+    background: hsl(var(--severity-critical));
+    color: white;
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translate3d(100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
